@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Esports Konkan | BGMI & Free Fire</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+    padding:0;
+      box-sizing:border-box;
+        font-family:'Orbitron',sans-serif;
+        }
+        body{
+          background:linear-gradient(135deg,#020024,#090979,#000);
+            color:#fff;
+              min-height:100vh;
+              }
+              header{
+                display:flex;
+                  justify-content:space-between;
+                    align-items:center;
+                      padding:20px 40px;
+                        background:rgba(0,0,0,0.6);
+                          backdrop-filter:blur(10px);
+                          }
+                          header h1{
+                            color:#00ffe1;
+                            }
+                            header button{
+                              padding:10px 20px;
+                                border:none;
+                                  border-radius:30px;
+                                    background:linear-gradient(45deg,#00ffe1,#00ff88);
+                                      cursor:pointer;
+                                        font-weight:bold;
+                                        }
+                                        .hero{
+                                          height:80vh;
+                                            display:flex;
+                                              align-items:center;
+                                                justify-content:center;
+                                                  text-align:center;
+                                                  }
+                                                  .hero-box{
+                                                    background:rgba(255,255,255,0.05);
+                                                      padding:50px;
+                                                        border-radius:20px;
+                                                          box-shadow:0 0 40px #00ffe1;
+                                                          }
+                                                          .hero-box h2{
+                                                            font-size:42px;
+                                                              margin-bottom:15px;
+                                                              }
+                                                              .hero-box p{
+                                                                opacity:.8;
+                                                                  margin-bottom:25px;
+                                                                  }
+                                                                  .hero-box button{
+                                                                    padding:15px 35px;
+                                                                      font-size:16px;
+                                                                        border:none;
+                                                                          border-radius:30px;
+                                                                            background:linear-gradient(45deg,#00ffe1,#0066ff);
+                                                                              cursor:pointer;
+                                                                              }
+                                                                              section{
+                                                                                padding:60px 40px;
+                                                                                }
+                                                                                .games{
+                                                                                  display:grid;
+                                                                                    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+                                                                                      gap:30px;
+                                                                                      }
+                                                                                      .game-card{
+                                                                                        background:rgba(255,255,255,0.05);
+                                                                                          padding:30px;
+                                                                                            border-radius:20px;
+                                                                                              box-shadow:0 0 20px rgba(0,255,225,.3);
+                                                                                              }
+                                                                                              .game-card h3{
+                                                                                                margin-bottom:10px;
+                                                                                                  color:#00ffe1;
+                                                                                                  }
+                                                                                                  #adminPanel{
+                                                                                                    display:none;
+                                                                                                      background:rgba(255,255,255,0.08);
+                                                                                                        margin:40px;
+                                                                                                          padding:30px;
+                                                                                                            border-radius:20px;
+                                                                                                              box-shadow:0 0 25px #ff0000;
+                                                                                                              }
+                                                                                                              footer{
+                                                                                                                text-align:center;
+                                                                                                                  padding:20px;
+                                                                                                                    opacity:.6;
+                                                                                                                    }
+                                                                                                                    </style>
+
+                                                                                                                    <!-- Firebase -->
+                                                                                                                    <script type="module">
+                                                                                                                    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+                                                                                                                    import { 
+                                                                                                                      getAuth,
+                                                                                                                        GoogleAuthProvider,
+                                                                                                                          signInWithPopup,
+                                                                                                                            onAuthStateChanged,
+                                                                                                                              signOut
+                                                                                                                              } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+                                                                                                                              const firebaseConfig = {
+                                                                                                                                apiKey: "AIzaSyCjxCgZWsqnIEMaCSCu7ZJykpAFGnX0kFY",
+                                                                                                                                  authDomain: "esports-konkan.firebaseapp.com",
+                                                                                                                                    projectId: "esports-konkan",
+                                                                                                                                      storageBucket: "esports-konkan.appspot.com",
+                                                                                                                                        messagingSenderId: "924344762740",
+                                                                                                                                          appId: "1:924344762740:web:11f8d5b158ee0dad096c21"
+                                                                                                                                          };
+
+                                                                                                                                          const app = initializeApp(firebaseConfig);
+                                                                                                                                          const auth = getAuth(app);
+                                                                                                                                          const provider = new GoogleAuthProvider();
+
+                                                                                                                                          // LOGIN
+                                                                                                                                          window.googleLogin = () => {
+                                                                                                                                            signInWithPopup(auth, provider);
+                                                                                                                                            };
+
+                                                                                                                                            // LOGOUT
+                                                                                                                                            window.logout = () => {
+                                                                                                                                              signOut(auth);
+                                                                                                                                              };
+
+                                                                                                                                              // AUTH STATE
+                                                                                                                                              onAuthStateChanged(auth, (user) => {
+                                                                                                                                                if(user){
+                                                                                                                                                    document.getElementById("loginBtn").style.display="none";
+                                                                                                                                                        document.getElementById("userName").innerText = user.displayName;
+
+                                                                                                                                                            // 🔐 ADMIN EMAIL CHECK
+                                                                                                                                                                if(user.email === "sawantbhagyesh98@gmail.com"){
+                                                                                                                                                                      document.getElementById("adminPanel").style.display="block";
+                                                                                                                                                                          }
+                                                                                                                                                                            }else{
+                                                                                                                                                                                document.getElementById("loginBtn").style.display="inline-block";
+                                                                                                                                                                                    document.getElementById("adminPanel").style.display="none";
+                                                                                                                                                                                        document.getElementById("userName").innerText="";
+                                                                                                                                                                                          }
+                                                                                                                                                                                          });
+                                                                                                                                                                                          </script>
+                                                                                                                                                                                          </head>
+
+                                                                                                                                                                                          <body>
+
+                                                                                                                                                                                          <header>
+                                                                                                                                                                                            <h1>ESPORTS KONKAN</h1>
+                                                                                                                                                                                              <div>
+                                                                                                                                                                                                  <span id="userName"></span>
+                                                                                                                                                                                                      <button id="loginBtn" onclick="googleLogin()">Login</button>
+                                                                                                                                                                                                          <button onclick="logout()">Logout</button>
+                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                            </header>
+
+                                                                                                                                                                                                            <div class="hero">
+                                                                                                                                                                                                              <div class="hero-box">
+                                                                                                                                                                                                                  <h2>BGMI & Free Fire Tournaments</h2>
+                                                                                                                                                                                                                      <p>Professional esports hosting platform</p>
+                                                                                                                                                                                                                          <button onclick="googleLogin()">Join Tournament</button>
+                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                            </div>
+
+                                                                                                                                                                                                                            <section>
+                                                                                                                                                                                                                              <h2 style="text-align:center;margin-bottom:40px;">Our Games</h2>
+                                                                                                                                                                                                                                <div class="games">
+                                                                                                                                                                                                                                    <div class="game-card">
+                                                                                                                                                                                                                                          <h3>BGMI</h3>
+                                                                                                                                                                                                                                                <p>Competitive battle royale tournaments with rewards.</p>
+                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                        <div class="game-card">
+                                                                                                                                                                                                                                                              <h3>Free Fire</h3>
+                                                                                                                                                                                                                                                                    <p>Fast-paced survival matches for pro squads.</p>
+                                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                                          </div>
+                                                                                                                                                                                                                                                                          </section>
+
+                                                                                                                                                                                                                                                                          <div id="adminPanel">
+                                                                                                                                                                                                                                                                            <h2>Admin Panel</h2>
+                                                                                                                                                                                                                                                                              <p>Welcome Admin (sawantbhagyesh98@gmail.com)</p>
+                                                                                                                                                                                                                                                                                <label>Tournament Time</label><br><br>
+                                                                                                                                                                                                                                                                                  <input type="datetime-local">
+                                                                                                                                                                                                                                                                                    <br><br>
+                                                                                                                                                                                                                                                                                      <button>Save Time</button>
+                                                                                                                                                                                                                                                                                      </div>
+
+                                                                                                                                                                                                                                                                                      <footer>
+                                                                                                                                                                                                                                                                                        © 2026 Esports Konkan. All rights reserved.
+                                                                                                                                                                                                                                                                                        </footer>
+
+                                                                                                                                                                                                                                                                                        </body>
+                                                                                                                                                                                                                                                                                        </html>
